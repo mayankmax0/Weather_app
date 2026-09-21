@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WeatherNow - Weather Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- HEADER -->
+        <header class="header">
+
+            <div class="logo">
+                <span class="logo-icon">☁️</span>
+                <div>
+                    <h1>WeatherNow</h1>
+                    <p>Live Weather Dashboard</p>
+                </div>
+            </div>
+
+            <div class="header-status">
+                <span class="status-dot"></span>
+                Live Data
+            </div>
+
+        </header>
+
+
+        <!-- SEARCH -->
+        <section class="search-section">
+
+            <form id="searchForm" class="search-box">
+
+                <span class="search-icon">🔍</span>
+
+                <input
+                    type="text"
+                    id="locationInput"
+                    placeholder="Search city, state or country..."
+                    value="London"
+                    autocomplete="off"
+                >
+
+                <button type="submit" id="searchBtn">
+                    Search
+                </button>
+
+            </form>
+
+            <button id="myLocationBtn" class="location-btn">
+                📍 Use My Location
+            </button>
+
+        </section>
+
+
+        <!-- ERROR -->
+        <div id="errorMessage" class="error-message hidden">
+            <span>⚠️</span>
+            <p id="errorText">Unable to fetch weather data.</p>
+        </div>
+
+
+        <!-- LOADING -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Fetching weather data...</p>
+        </div>
+
+
+        <!-- MAIN WEATHER -->
+        <main id="weatherContent">
+
+            <!-- CURRENT WEATHER HERO -->
+            <section class="hero-weather">
+
+                <div class="hero-left">
+
+                    <div class="location-info">
+                        <span>📍</span>
+
+                        <div>
+                            <h2 id="cityName">London</h2>
+                            <p id="countryName">United Kingdom</p>
+                        </div>
+                    </div>
+
+                    <p class="local-time">
+                        Local time:
+                        <span id="localTime">--</span>
+                    </p>
+
+                    <div class="temperature-container">
+
+                        <img
+                            id="weatherIcon"
+                            src=""
+                            alt="Weather condition"
+                        >
+
+                        <div class="temperature">
+                            <span id="temperature">--</span>
+                            <span class="degree">°C</span>
+                        </div>
+
+                    </div>
+
+                    <h3 id="condition">Loading...</h3>
+
+                    <p class="feels-like">
+                        Feels like
+                        <strong id="feelsLike">--°C</strong>
+                    </p>
+
+                </div>
+
+
+                <div class="hero-right">
+
+                    <div class="rain-alert" id="rainAlert">
+                        <div class="alert-icon">🌧️</div>
+
+                        <div>
+                            <span class="alert-label">
+                                Rain Status
+                            </span>
+
+                            <strong id="rainStatus">
+                                Checking...
+                            </strong>
+                        </div>
+                    </div>
+
+                    <div class="updated">
+                        Last updated:
+                        <span id="lastUpdated">--</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- WEATHER FLASH CARDS -->
+            <section class="cards-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-label">
+                            WEATHER DETAILS
+                        </span>
+
+                        <h2>Today's Conditions</h2>
+                    </div>
+                </div>
+
+
+                <div class="weather-grid">
+
+                    <!-- WIND -->
+                    <div class="weather-card wind-card">
+
+                        <div class="card-top">
+                            <div class="card-icon">
+                                💨
+                            </div>
+
+                            <span class="card-title">
+                                Wind
+                            </span>
+                        </div>
+
+                        <div class="card-value">
+                            <span id="windSpeed">--</span>
+                            <small>km/h</small>
+                        </div>
+
+                        <div class="card-description">
+                            Direction:
+                            <strong id="windDirection">--</strong>
+                        </div>
+
+                    </div>
+
+
+                    <!-- HUMIDITY -->
+                    <div class="weather-card">
+
+                        <div class="card-top">
+                            <div class="card-icon">
+                                💧
+                            </div>
+
+                            <span class="card-title">
+                                Humidity
+                            </span>
+                        </div>
+
+                        <div class="card-value">
+                            <span id="humidity">--</span>
+                            <small>%</small>
+                        </div>
+
+                        <div class="progress-container">
+                            <div
+                                class="progress-bar"
+                                id="humidityBar"
+                            ></div>
+                        </div>
+
+                        <div class="card-description">
+                            Relative humidity
+                        </div>
+
+                    </div>
+
+
+                    <!-- PRECIPITATION -->
+                    <div class="weather-card rain-card">
+
+                        <div class="card-top">
+                            <div class="card-icon">
+                                🌧️
+                            </div>
+
+                            <span class="card-title">
+                                Precipitation
+                            </span>
+                        </div>
+
+                        <div class="card-value">
+                            <span id="precipitation">--</span>
+                            <small>mm</small>
+                        </div>
+
+                        <div class="card-description">
+                            Current precipitation
+                        </div>
+
+                    </div>
+
+
+                    <!-- UV -->
+                    <div class="weather-card">
+
+                        <div class="card-top">
+                            <div class="card-icon">
+                                ☀️
+                            </div>
+
+                            <span class="card-title">
+                                UV Index
+                            </span>
+                        </div>
+
+                        <div class="card-value">
+                            <span id="uvIndex">--</span>
+                        </div>
+
+                        <div class="uv-status" id="uvStatus">
+                            --
+                        </div>
+
+                    </div>
+
+
+                    <!-- VISIBILITY -->
+                    <div class="weather-card">
+
+                        <div class="card-top">
+                            <div class="card-icon">
+                                👁️
+                            </div>
+
+                            <span class="card-title">
+                                Visibility
+                            </span>
+                        </div>
+
+                        <div class="card-value">
+                            <span id="visibility">--</span>
+                            <small>km</small>
+                        </div>
+
+                        <div class="card-description">
+                            Current visibility
+                        </div>
+
+                    </div>
+
+
+                    <!-- PRESSURE -->
+                    <div class="weather-card">
+
+                        <div class="card-top">
+                            <div class="card-icon">
+                                🌡️
+                            </div>
+
+                            <span class="card-title">
+                                Pressure
+                            </span>
+                        </div>
+
+                        <div class="card-value">
+                            <span id="pressure">--</span>
+                            <small>mb</small>
+                        </div>
+
+                        <div class="card-description">
+                            Atmospheric pressure
+                        </div>
+
+                    </div>
+
+
+                    <!-- CLOUD -->
+                    <div class="weather-card">
+
+                        <div class="card-top">
+                            <div class="card-icon">
+                                ☁️
+                            </div>
+
+                            <span class="card-title">
+                                Cloud Cover
+                            </span>
+                        </div>
+
+                        <div class="card-value">
+                            <span id="cloud">--</span>
+                            <small>%</small>
+                        </div>
+
+                        <div class="progress-container">
+                            <div
+                                class="progress-bar"
+                                id="cloudBar"
+                            ></div>
+                        </div>
+
+                        <div class="card-description">
+                            Cloud coverage
+                        </div>
+
+                    </div>
+
+
+                    <!-- AIR QUALITY -->
+                    <div class="weather-card air-card">
+
+                        <div class="card-top">
+                            <div class="card-icon">
+                                🌫️
+                            </div>
+
+                            <span class="card-title">
+                                Air Quality
+                            </span>
+                        </div>
+
+                        <div class="card-value">
+                            <span id="aqi">--</span>
+                        </div>
+
+                        <div
+                            class="aqi-status"
+                            id="aqiStatus"
+                        >
+                            --
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- WEATHER SUMMARY -->
+            <section class="summary-section">
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        🌤️
+                    </div>
+
+                    <div>
+                        <span class="summary-label">
+                            WEATHER SUMMARY
+                        </span>
+
+                        <p id="weatherSummary">
+                            Loading weather information...
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER INFO -->
+            <section class="footer-info">
+
+                <div>
+                    🌍
+                    <span id="coordinates">
+                        Coordinates: --
+                    </span>
+                </div>
+
+                <div>
+                    🕒
+                    <span id="timezone">
+                        Timezone: --
+                    </span>
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <footer>
+            <p>
+                WeatherNow • Powered by
+                <strong>WeatherAPI.com</strong>
+            </p>
+        </footer>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
